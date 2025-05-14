@@ -2,13 +2,14 @@
 /*
  * ami.h - This file contains generic AMI driver definitions.
  *
- * Copyright (c) 2023 Advanced Micro Devices, Inc. All rights reserved.
+ * Copyright (c) 2023 - 2025 Advanced Micro Devices, Inc. All rights reserved.
  */
 
 #ifndef AMI_DRIVER_H
 #define AMI_DRIVER_H
 
 #include <linux/printk.h>
+#include <linux/version.h>
 
 /* Meta Information */
 #define MDL_VERSION     "1.0.0"

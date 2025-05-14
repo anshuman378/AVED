@@ -2,7 +2,7 @@
 /*
  * ami_program.c - This file contains functions to program (flash) devices.
  * 
- * Copyright (c) 2023-present Advanced Micro Devices, Inc. All rights reserved.
+ * Copyright (c) 2023 - 2025 Advanced Micro Devices, Inc. All rights reserved.
  */
 
 #include <linux/types.h>
@@ -90,7 +90,11 @@ static int do_image_download(struct amc_control_ctxt *amc_ctrl_ctxt, uint8_t *bu
 				break;
 
 			if (efd_ctx)
+			#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 8, 0)
+				eventfd_signal(efd_ctx);
+			#else
 				eventfd_signal(efd_ctx, bytes_to_write);
+			#endif
 		} else {
 			uint32_t boot_tag = INVALID_BOOT_TAG;
 
@@ -144,7 +148,11 @@ static int do_image_download(struct amc_control_ctxt *amc_ctrl_ctxt, uint8_t *bu
 			buf, (PDI_CHUNK_SIZE * PDI_CHUNK_MULTIPLIER));
 
 		if (!ret && efd_ctx)
-			eventfd_signal(efd_ctx, (PDI_CHUNK_SIZE * PDI_CHUNK_MULTIPLIER));
+		#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 8, 0)
+			eventfd_signal(efd_ctx);
+		#else
+			eventfd_signal(efd_ctx, bytes_to_write);
+		#endif
 	}
 
 	if (ret)

@@ -2,7 +2,7 @@
 /*
  * ami_top.h - This file contains common AMI driver definitions.
  *
- * Copyright (c) 2023 Advanced Micro Devices, Inc. All rights reserved.
+ * Copyright (c) 2023 - 2025 Advanced Micro Devices, Inc. All rights reserved.
  */
 
 #ifndef AMI_TOP_H
@@ -13,13 +13,16 @@
 #include <linux/list.h>
 #include <linux/kref.h>
 #include <linux/semaphore.h>
-
 #include "ami.h"
 #include "ami_vsec.h"
 #include "ami_pcie.h"
 #include "ami_sensor.h"
 #include "ami_cdev.h"
 #include "ami_amc_control.h"
+
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 12, 0)
+#include <linux/vmalloc.h>
+#endif
 
 /* Device state strings. */
 #define STATE_NAME_INIT       	"INIT"
